@@ -1,0 +1,11 @@
+{
+  "name": "appleDnsOptimizer",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Yaodong Li <mail@liyaodong.com>",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.2.0",
+    "ping": "^0.4.2"
+  }
+}
