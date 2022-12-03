@@ -1,7 +1,7 @@
 require("dotenv").config();
 const superagent = require("superagent");
 const { serverNodeList } = require("./config");
-const iconv = require("iconv-lite");
+const _ = require("lodash");
 
 const boceDnsCheckToolApiKey = process.env.BOCE_API_KEY;
 
@@ -50,7 +50,21 @@ const getDnsQueryResult = async (taskId, retryCount = 0) => {
   return getDnsQueryResult(taskId, retryCount + 1);
 };
 
+/**
+ * @param {import("./types/types").GetTaskResultRes} result - The dns check result
+ * @return {string[]}
+ */
+const getAllHostsFromDnsCheckResult = (result) => {
+  const list = result.list || [];
+  const allRecords = list
+    .flatMap((listItem) => listItem.records || [])
+    .filter((record) => record.type === "A");
+
+  return _.uniqBy(allRecords, (x) => x.value);
+};
+
 module.exports = {
   createDnsQueryTask,
   getDnsQueryResult,
+  getAllHostsFromDnsCheckResult,
 };

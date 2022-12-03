@@ -1,4 +1,4 @@
-interface PingRecord {
+export interface PingRecord {
   ttl: number;
   name: string;
   type: string;

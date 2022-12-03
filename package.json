@@ -6,8 +6,8 @@
   "license": "MIT",
   "dependencies": {
     "dotenv": "^16.0.3",
-    "iconv-lite": "^0.6.3",
     "jsonfile": "^6.1.0",
+    "lodash": "^4.17.21",
     "ping": "^0.4.2",
     "promise-sequential": "^1.1.1",
     "superagent": "^8.0.5"
