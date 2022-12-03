@@ -27,23 +27,13 @@ const MAX_RETRIE_COUNT = 6;
  * @return {Promise<import("./types/types").GetTaskResultRes>} The dns query job result
  */
 const getDnsQueryResult = async (taskId, retryCount = 0) => {
-  console.log(
-    "%c [ retryCount ]-30",
-    "font-size:13px; background:pink; color:#bf2c9f;",
-    retryCount
-  );
   const result = await superagent.get(
     `https://api.boce.com/v3/task/dig/${taskId}?key=${boceDnsCheckToolApiKey}`
   );
   const resData = result?._body;
-  console.log(
-    "%c [ resData ]-36",
-    "font-size:13px; background:pink; color:#bf2c9f;",
-    resData
-  );
 
   if (resData?.done) {
-    return result.data;
+    return resData;
   }
 
   if (retryCount >= MAX_RETRIE_COUNT) {
@@ -53,7 +43,7 @@ const getDnsQueryResult = async (taskId, retryCount = 0) => {
   }
 
   console.log(
-    `Task ${taskId} not complete yet, will retry to get result in 10s later. retryCount=${retryCount}`
+    `Task ${taskId} is not complete yet, will retry to get result in 20s. retryCount=${retryCount}. resultCount=${resData?.list?.length}`
   );
 
   await sleep(20 * 1000);
