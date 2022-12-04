@@ -19,10 +19,16 @@ if (!boceDnsCheckToolApiKey) {
 }
 
 (async () => {
-  const allTasks = await seq(
+  await seq(
     domainsToCheck.map((domain) => async () => {
       const cacheFile = path.join(__dirname, "./cache", domain.concat(".json"));
-      let cacheContent = await jsonfile.readFile(cacheFile);
+      let cacheContent;
+
+      try {
+        cacheContent = await jsonfile.readFile(cacheFile);
+      } catch (e) {
+        console.log(`No cache found, continue to create task.`);
+      }
 
       if (!cacheContent) {
         const dnsQueryTask = await createDnsQueryTask(domain);
