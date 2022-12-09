@@ -1,0 +1,15 @@
+version: '3.7'
+
+services:
+  dnsmasq:
+    container_name: dnsmasq
+    restart: always
+    ports:
+      - "53:53/udp"
+      - "10001:8080"
+    volumes:
+      - "./dnsmasq.conf:/etc/dnsmasq.conf"
+    environment:
+      - "HTTP_USER=admin"
+      - "HTTP_PASS=123456"
+    image: jpillora/dnsmasq
